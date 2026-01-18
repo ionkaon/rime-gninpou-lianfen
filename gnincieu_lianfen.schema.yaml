@@ -2,14 +2,14 @@
 # encoding: utf-8
 
 schema:
-  schema_id: gninpou_lianfen
-  name: 寧波話兩分
+  schema_id: gnincieu_lianfen
+  name: 寧波話兩分（鄞州）
   version: "2026.01.18"
   author:
     - 天珩 <2417647441@qq.com>
     - Shin Zoqchiuq <shinzoqchiuq@outlook.com>
   description: |-
-    基於 [字海](http://zisea.com/) 兩分輸入方案的寧波話版本兩分輸入方案。
+    基於 [字海](http://zisea.com/) 兩分輸入方案的寧波話版本兩分輸入方案（鍾公廟、首南附近口音）。
 
 switches:
   - name: ascii_mode
@@ -47,15 +47,28 @@ speller:
   alphabet: abcdefghijklmnopqrstuvwxyz
   delimiter: " '"
   algebra:
-    - xform/(\w*)-(\w*)/$1/
+    - xform/(\w*)-(\w*)/$2/
+    - xform/(^y|i)u(?=n)/$1o/
+    - derive/([pb]|ph)un/$1oe/
+    - xform/mun/moe/
+    - xform/uo/o/
+    - xform/wo/gho/
+    - erase/(^|c|j|gn|kn|[csz]h)(y|i)o$/
+    - erase/\b-\b/
     - xform/=//
 
 translator:
   dictionary: gninpou_lianfen
-  prism: gninpou_lianfen
+  prism: gnincieu_lianfen
   spelling_hints: 20
   comment_format:
-    - xform/(\w*)-(\w*)/$1/
+    - xform/(\w*)-(\w*)/$2/
+    - xform/(\by|i)u(?=n)/$1o/
+    - xform/([pbm]|ph)un/$1oe/
+    - xform/uo/o/
+    - xform/wo/gho/
+    - xform/(\b|c|j|gn|kn|[csz]h)(y|i)o\b//
+    - xform/\b-\b//
     - xform/=//
 
 punctuator:

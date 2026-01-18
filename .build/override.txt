@@ -1,3 +1,4 @@
+人	gnin
 亻	gnin
 攵	ven
 阝	gni
@@ -6,3 +7,4 @@
 乙	ciq
 丶	ti
 又	yeu
+居	ciu

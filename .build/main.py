@@ -45,7 +45,6 @@ with open('wugniu_gninpou.dict.yaml', encoding="utf-8") as f:
                 if len(parts) == 2 or get_freq(parts[2]) > 0.07:
                     # replace if a character has two syllables
                     wuphin = parts[1].replace(' ', '')
-                    wuphin = re.sub(r"\-.*", "", wuphin)
                     if wuphin == "": continue
 
                     # the original Traditional Chinese character
@@ -81,7 +80,7 @@ with open('liangfen.txt', encoding="utf-8") as f:
                 word_r = line[3]
                 for wuphin_l in d[word_l]:
                     for wuphin_r in d[word_r]:
-                        res.append((ch, wuphin_l + wuphin_r))
+                        res.append((ch, wuphin_l + "=" + wuphin_r))
             else:  # len(line) == 4
                 word = line[2]
                 for wuphin in d[word]:
