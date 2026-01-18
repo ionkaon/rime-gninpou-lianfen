@@ -1,0 +1,61 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: gninpou_lianfen
+  name: 寧波話兩分
+  version: "2026.01.18"
+  author:
+    - 天珩 <2417647441@qq.com>
+    - Shin Zoqchiuq <shinzoqchiuq@outlook.com>
+  description: |-
+    基於 [字海](http://zisea.com/) 兩分輸入方案的寧波話版本兩分輸入方案。
+
+switches:
+  - name: ascii_mode
+    states: [ 中文, 英文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+  filters:
+    - simplifier
+    - uniquifier
+    - reverse_lookup_filter
+
+speller:
+  alphabet: abcdefghijklmnopqrstuvwxyz
+  delimiter: " '"
+
+translator:
+  dictionary: gninpou_lianfen
+  spelling_hints: 20
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  import_preset: default

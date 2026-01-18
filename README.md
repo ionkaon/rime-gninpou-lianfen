@@ -1,18 +1,16 @@
-# rime-loengfan
+# 字海兩分輸入方案寧波話版
 
-℞: `CanCLID/rime-loengfan`
+配方：℞ **NGLI/rime-gninpou-lianfen**
 
-Loengfan (粵語兩分) is the Cantonese version of Liang Fen input method.
+寧波話兩分輸入法是基於 [字海](http://zisea.com/) 兩分輸入方案的寧波話版本兩分輸入方案。
 
-It is based on [zisea](http://zisea.com/) Liang Fen (字海兩分) data and the dictionary of [rime-cantonese](https://github.com/rime/rime-cantonese) input method.
+## 使用
 
-Usage:
+使用兩個部件的寧波話發音來輸入一個漢字。例如：
 
-Input a character by the pronunciation of two parts. For example:
+- 蒛 = 艹 (tshau) + 缺 (chiuq) = tshauchiuq
+- 蒜 = 艹 (tshau) + 示 (zy) = tshauzy
 
-- 蒛 = 艹 (cou2) + 缺 (kyut3) = cou2kyut3
-- 蒜 = 艹 (cou2) + 示 (si6) = cou2si6
-
-More detailed rules can be found [here](http://cheonhyeong.com/File/LiangFenHandbook.pdf) (in Chinese).
+兩分拆分的具體細節可以查看 [兩分手冊](http://cheonhyeong.com/File/LiangFenHandbook.pdf)
 
 Or you can press `v` to enter the Cangjie reverse lookup.

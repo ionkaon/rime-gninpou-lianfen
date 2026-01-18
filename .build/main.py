@@ -1,5 +1,7 @@
 from collections import defaultdict
 from itertools import chain
+from datetime import date
+import re
 
 
 def get_freq(s):
@@ -17,7 +19,7 @@ def get_freq(s):
 # Traditional Chinese to Simplified Chinese
 
 
-with open('TSCharacters.txt') as f:
+with open('TSCharacters.txt', encoding="utf-8") as f:
     d_t2s = {a: bx.split(' ')
              for line in f for a, bx in (line.rstrip().split('\t'),)}
 
@@ -26,7 +28,7 @@ with open('TSCharacters.txt') as f:
 d_trad = defaultdict(list)
 d_simp = defaultdict(list)
 
-with open('jyut6ping3.dict.yaml') as f:
+with open('wugniu_gninpou.dict.yaml', encoding="utf-8") as f:
     # skip the yaml header
     for line in f:
         if line == '...\n':
@@ -42,21 +44,23 @@ with open('jyut6ping3.dict.yaml') as f:
                 # remove pronunciation with low frequency
                 if len(parts) == 2 or get_freq(parts[2]) > 0.07:
                     # replace if a character has two syllables
-                    jyutping = parts[1].replace(' ', '')
+                    wuphin = parts[1].replace(' ', '')
+                    wuphin = re.sub(r"\-.*", "", wuphin)
+                    if wuphin == "": continue
 
                     # the original Traditional Chinese character
-                    d_trad[char].append(jyutping)
+                    d_trad[char].append(wuphin)
 
                     try:
                         for ch in d_t2s[char]:
                             # Simplified Chinese character
-                            d_simp[ch].append(jyutping)
+                            d_simp[ch].append(wuphin)
                     except KeyError:
                         pass
 
 # override
 
-with open('override.txt') as f1, open('radicals.txt') as f2:
+with open('override.txt', encoding="utf-8") as f1, open('radicals.txt', encoding="utf-8") as f2:
     d_override = {a: bx.split(' ') for line in chain(f1, f2)
                   for a, bx in (line.rstrip().split('\t'),)}
 
@@ -67,7 +71,7 @@ d = {**d_simp, **d_trad, **d_override}
 res = []
 error_keys = set()
 
-with open('liangfen.txt') as f:
+with open('liangfen.txt', encoding="utf-8") as f:
     for line in f:
         ch = line[0]
 
@@ -75,22 +79,39 @@ with open('liangfen.txt') as f:
             if len(line) == 5:
                 word_l = line[2]
                 word_r = line[3]
-                for jyutping_l in d[word_l]:
-                    for jyutping_r in d[word_r]:
-                        res.append((ch, jyutping_l + jyutping_r))
+                for wuphin_l in d[word_l]:
+                    for wuphin_r in d[word_r]:
+                        res.append((ch, wuphin_l + wuphin_r))
             else:  # len(line) == 4
                 word = line[2]
-                for jyutping in d[word]:
-                    res.append((ch, jyutping))
+                for wuphin in d[word]:
+                    res.append((ch, wuphin))
         except KeyError as e:
             cause = e.args[0]
             error_keys.add(cause)
 
 if error_keys:
-    with open('missing.log', 'w') as f:
+    with open('missing.log', 'w', encoding="utf-8") as f:
         for k in error_keys:
             print(k, file=f)
 
-with open('../loengfan.dict.yaml', 'w') as f:
+with open('../gninpou_lianfen.dict.yaml', 'w', encoding="utf-8", newline="\n") as f:
+    f.write("""# Rime dictionary
+# encoding: utf-8
+#
+# Lianfen, the Ningbo dialect version of Liang Fen (兩分) input method.
+#
+# Based on zisea Liang Fen (字海兩分) data (https://github.com/ayaka14732/liangfen),
+# and the dictionary of the rime-wugniu_gninpou input method (https://github.com/NGLI/rime-wugniu_gninpou).
+
+---
+name: gninpou_lianfen
+""" + date.today().strftime('version: "%Y.%m.%d"') +
+"""
+sort: by_weight
+use_preset_vocabulary: true
+...
+
+""")
     for l, r in res:
         print(l, r, sep='\t', file=f)
