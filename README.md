@@ -11,6 +11,4 @@
 - 蒛 = 艹 (tshau) + 缺 (chiuq) = tshauchiuq
 - 蒜 = 艹 (tshau) + 示 (zy) = tshauzy
 
-兩分拆分的具體細節可以查看 [兩分手冊](http://cheonhyeong.com/File/LiangFenHandbook.pdf)
-
-Or you can press `v` to enter the Cangjie reverse lookup.
+兩分拆分的具體細節可以查看 [兩分手冊](http://cheonhyeong.com/File/LiangFenHandbook.pdf)。
