@@ -9,7 +9,7 @@ schema:
     - 天珩 <2417647441@qq.com>
     - Shin Zoqchiuq <shinzoqchiuq@outlook.com>
   description: |-
-    基於 [字海](http://zisea.com/) 兩分輸入方案的寧波話版本兩分輸入方案。
+    基於 [字海](http://zisea.com/) 兩分輸入方案的寧波話兩分輸入方案。
 
 switches:
   - name: ascii_mode
