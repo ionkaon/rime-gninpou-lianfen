@@ -112,6 +112,7 @@ name: gninpou_lianfen
 """
 sort: by_weight
 use_preset_vocabulary: true
+max_phrase_length: 1
 ...
 
 """)

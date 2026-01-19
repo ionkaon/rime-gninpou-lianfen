@@ -4,7 +4,7 @@
 schema:
   schema_id: gninpou_lianfen
   name: 寧波話兩分
-  version: "2026.01.18"
+  version: "0.1.0"
   author:
     - 天珩 <2417647441@qq.com>
     - Shin Zoqchiuq <shinzoqchiuq@outlook.com>
@@ -37,7 +37,7 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
-    - script_translator
+    - table_translator
   filters:
     - simplifier
     - uniquifier
@@ -48,15 +48,85 @@ speller:
   delimiter: " '"
   algebra:
     - xform/(\w*)-(\w*)/$1/
+
+    # io韻消失
+    - erase/(\b|c|j|gn|kn|[csz]h)(y|i)o\b/
+
+    # 兼容吳語協會式拼音
+    - derive/q/h/
+    - derive/(i|y)au/$1o/
+    - derive/([gk])ni(?=[nqh]|\d|\b)/nyi/
+    - derive/([gk])ni(?=[aoue])/ny/
+    - derive/(?<=[szh])yu(?=[nqh])/oe/
+    - derive/er/r/
+
+    # 胡 ≈ 符
+    - derive/wu\b/vu/
+    - derive/vu\b/wu/
+    # 卵 ≈ 漏
+    - derive/loe/leu/
+
+    # 新派
+
+    # 且 ≈ 采
+    - derive/c(h)?ie\b/ts$1e/
+    - derive/jie\b/dze/
+    - derive/(?<=[sz])hie\b/e/
+    - derive/\bye\b/ghe/
+    # 降 ≈ 壯
+    - derive/ciaon/tsaon/
+    # 穿 ≈ 秋
+    - derive/ts(h)?oe\b/c$1ieu/
+    - derive/dzoe\b/jieu/
+    - derive/\b(s|z)oe\b/$1hieu/
+    # 掛 ≈ 架
+    - derive/(kh?)uo/$1o/
+    # 話 ≈ 夏
+    - derive/wo/gho/
+    - derive/\b(h)?uo/$1o/
+    # 官 ≈ 孤
+    - derive/(?<![iy])un/u/
+    # 春 ≈ 充，出 ≈ 促
+    - derive/(?<=[szh])(yu|oe)(?=[nqh])/o/
+    # 允 ≈ 用，缺 ≈ 喫
+    - derive/(\by|i)u(?=[nqh])/$1o/
+    - derive/(\by|i)o(?=[nqh])/$1u/
+    # 削 ≈ 吸
+    - derive/ia(?=q|h)/i/
+    - derive/ya(?=q|h)/yi/
+
+    # 清鼻邊音
+    - derive/([mnl])h/$1/
+    - derive/kn/gn/
+    - derive/nk/ng/
+    # 容錯 gn(ny) => n kn => nh
+    - derive/(gn|ny)i/ni/
+    - derive/kni/nhi/
+    - derive/ny(?=[aoue])/ni/
+    # 簡拼
+    - abbrev/\b([a-z]).+\b/$1/
+    - abbrev/\b([pmtnlszckg]h|[kg]n|n[kg]|tsh?|dz).+\b/$1/
+    # 容錯 un => oe
+    - derive/([pbmw]|ph)un/$1oe/
+    - derive/\b([kgh]|kh)?un/$1uoe/
+    # 容錯 au => ao
+    - derive/au/ao/
+    # c組聲母後自動加i
+    - derive/\b(c|j|gn|kn|[csz]h)i(?=[aoue])/$1/
+    # 容錯 介音、主元音順序調換
+    - derive/\b(.+)([iu])([aeou])([euonqh])\b/$1$3$2$4/
+    # 容錯 oe => eo
+    - derive/oe/eo/
+    # 容錯 ao => oa
+    - derive/ao/oa/
+    # 容錯 ae => ea
+    - derive/ae/ea/
+
     - xform/=//
 
 translator:
   dictionary: gninpou_lianfen
   prism: gninpou_lianfen
-  spelling_hints: 20
-  comment_format:
-    - xform/(\w*)-(\w*)/$1/
-    - xform/=//
 
 punctuator:
   import_preset: default
