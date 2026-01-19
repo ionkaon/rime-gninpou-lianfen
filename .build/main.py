@@ -70,19 +70,22 @@ d = {**d_simp, **d_trad, **d_override}
 res = []
 error_keys = set()
 
-with open('liangfen.txt', encoding="utf-8") as f:
+with open('lfzy.tsv', encoding="utf-8") as f:
     for line in f:
         ch = line[0]
+        line_clean = re.sub(r"\(.\)", "", line)
 
         try:
-            if len(line) == 5:
-                word_l = line[2]
-                word_r = line[3]
+            if " " in line:
+                word_l, word_r = re.split(r" +", line_clean[2:-1])
+                if len(word_l) > 1 or len(word_r) > 1:
+                    word_l = word_l[0]
+                    word_r = word_r[0]
                 for wuphin_l in d[word_l]:
                     for wuphin_r in d[word_r]:
                         res.append((ch, wuphin_l + "=" + wuphin_r))
-            else:  # len(line) == 4
-                word = line[2]
+            else:
+                word = line_clean[2]
                 for wuphin in d[word]:
                     res.append((ch, wuphin))
         except KeyError as e:
@@ -100,7 +103,7 @@ with open('../gninpou_lianfen.dict.yaml', 'w', encoding="utf-8", newline="\n") a
 #
 # Lianfen, the Ningbo dialect version of Liang Fen (兩分) input method.
 #
-# Based on zisea Liang Fen (字海兩分) data (https://github.com/ayaka14732/liangfen),
+# Based on lfzy data (https://github.com/osfans/MCPDict/blob/master/tools/tables/data/lfzy.tsv),
 # and the dictionary of the rime-wugniu_gninpou input method (https://github.com/NGLI/rime-wugniu_gninpou).
 
 ---
