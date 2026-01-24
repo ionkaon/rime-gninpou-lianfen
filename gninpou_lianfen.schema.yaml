@@ -4,7 +4,7 @@
 schema:
   schema_id: gninpou_lianfen
   name: 寧波話兩分
-  version: "0.1.0"
+  version: "0.1.1"
   author:
     - 天珩 <2417647441@qq.com>
     - Shin Zoqchiuq <shinzoqchiuq@outlook.com>
@@ -103,9 +103,6 @@ speller:
     - derive/(gn|ny)i/ni/
     - derive/kni/nhi/
     - derive/ny(?=[aoue])/ni/
-    # 簡拼
-    - abbrev/\b([a-z]).+\b/$1/
-    - abbrev/\b([pmtnlszckg]h|[kg]n|n[kg]|tsh?|dz).+\b/$1/
     # 容錯 un => oe
     - derive/([pbmw]|ph)un/$1oe/
     - derive/\b([kgh]|kh)?un/$1uoe/
